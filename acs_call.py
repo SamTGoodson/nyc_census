@@ -1,6 +1,7 @@
 import requests 
 import pandas as pd
 import argparse
+from tqdm import tqdm
 
 import os
 from dotenv import load_dotenv
@@ -14,7 +15,7 @@ CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
 def fetch_tracts(acs_year,variables):
     acs_dfs = []
 
-    for county in COUNTIES:
+    for county in tqdm(COUNTIES, desc="Fetching tracts by borough"):
         url = f'http://api.census.gov/data/{acs_year}/acs/acs5'
         params = {
         'get' : variables,
