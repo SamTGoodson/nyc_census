@@ -24,6 +24,11 @@ def fetch_tracts(acs_year,variables):
         'key' : CENSUS_API_KEY
         }
         response = requests.get(url,params)
+
+        if response.status_code != 200:
+            print(f"Error fetching county {county}: {response.status_code} - {response.text}")
+            continue
+
         borough_results = response.json()
         borough_df = pd.DataFrame(borough_results[1:], columns=borough_results[0])
         acs_dfs.append(borough_df)

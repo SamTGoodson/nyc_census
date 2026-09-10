@@ -38,6 +38,11 @@ def fetch_pumas(acs_year,variables):
         'key': CENSUS_API_KEY
         }
         response = requests.get(url,params)
+
+        if response.status_code != 200:
+            print(f"Error fetching county {puma}: {response.status_code} - {response.text}")
+            continue 
+
         puma_results = response.json()
         puma_df = pd.DataFrame(puma_results[1:], columns=puma_results[0])
         all_pumas.append(puma_df)
